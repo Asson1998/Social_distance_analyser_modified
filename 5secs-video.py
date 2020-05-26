@@ -1,0 +1,34 @@
+import numpy as np
+import cv2
+import time
+import os
+
+# The duration in seconds of the video captured
+capture_duration = 5
+
+cap = cv2.VideoCapture(0)
+
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('5secs.avi',fourcc, 20.0, (640,480))
+
+start_time = time.time()
+while( int(time.time() - start_time) < capture_duration ):
+    ret, frame = cap.read()
+    if ret==True:
+        frame = cv2.flip(frame,0)
+        out.write(frame)
+        cv2.imshow('frame',frame)
+    else:
+        break
+
+cap.release()
+out.release()
+cv2.destroyAllWindows()
+
+arr = os.listdir()
+if "5secs.avi" in arr:
+    print("THE VIDEO WAS CREATED ")
+
+
+os.remove("5secs.avi")
+print("File Removed!")
